@@ -3,6 +3,7 @@ import { IoClose } from 'react-icons/io5';
 
 import { type PendingImage } from '@/entities/image';
 
+import { API_URL } from '@/shared/config';
 import { useUploadImage } from '@/shared/lib';
 import { Button, Spinner } from '@/shared/ui';
 
@@ -57,7 +58,7 @@ export const ProductImageUpload = ({ images, onChange }: Props) => {
 					{images.map(img => (
 						<div key={img.localId} className='relative aspect-square'>
 							<img
-								src={img.url ? `http://127.0.0.1:8000${img.url}` : 'nophoto.png'}
+								src={img.url ? `${API_URL}${img.url}` : 'nophoto.png'}
 								alt={img.alt}
 								className='h-full w-full rounded-lg object-cover'
 							/>

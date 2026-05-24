@@ -3,6 +3,7 @@ import { BsGenderFemale, BsGenderMale, BsPencil, BsTrash } from 'react-icons/bs'
 
 import { useProducts } from '@/features/product';
 
+import { API_URL } from '@/shared/config';
 import { Badge, Button, Spinner, Typography, useOpenModal } from '@/shared/ui';
 
 export const ProductsTable = () => {
@@ -76,7 +77,7 @@ export const ProductsTable = () => {
 											<img
 												src={
 													product.images?.length
-														? `http://127.0.0.1:8000${product.images[0].url}`
+														? `${API_URL}${product.images[0].url}`
 														: 'nophoto.png'
 												}
 												alt='product image'
