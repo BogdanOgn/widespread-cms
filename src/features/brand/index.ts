@@ -1,0 +1,1 @@
+export { useBrands } from './model';

@@ -27,7 +27,7 @@ export interface IProduct {
 export interface IProductCreate {
 	title: string;
 	description: string;
-	brand?: number;
+	brand_id?: number;
 	price: number;
 	sale_price?: number;
 	slug: string;

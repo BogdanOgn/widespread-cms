@@ -31,7 +31,10 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
 			'modal trs flex-center bg-overlay fixed inset-0 z-50 flex backdrop-blur-sm',
 			direction
 		);
-		const modalContentClass = clsx('modal-content trs bg-surface max-w-100 my-6 ', className);
+		const modalContentClass = clsx(
+			'modal-content trs bg-surface max-w-100 my-6 max-h-[90vh] overflow-auto',
+			className
+		);
 
 		return (
 			<Portal rootId='#modal'>

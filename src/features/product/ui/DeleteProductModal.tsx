@@ -1,15 +1,21 @@
-import { Button, Modal, type ModalComponentProps, Typography, useModalPayload } from '@/shared/ui';
+import {
+	Button,
+	Modal,
+	type ModalComponentProps,
+	Spinner,
+	Typography,
+	useModalPayload
+} from '@/shared/ui';
 
 import { useDeleteProduct } from '../model';
 
 export const DeleteProductModal = ({ isOpen, close }: ModalComponentProps) => {
 	const modalPayload = useModalPayload<{ productId: number } | null>();
-
-	const deleteProduct = useDeleteProduct();
+	const { mutateAsync: deleteProduct, isPending } = useDeleteProduct();
 
 	const handleDeleteProduct = () => {
 		if (!modalPayload?.productId) return;
-		deleteProduct.mutate(modalPayload.productId, {
+		deleteProduct(modalPayload.productId, {
 			onSuccess: () => {
 				close();
 			}
@@ -26,9 +32,9 @@ export const DeleteProductModal = ({ isOpen, close }: ModalComponentProps) => {
 					variant='danger'
 					onClick={handleDeleteProduct}
 					className='flex-1'
-					disabled={deleteProduct.isPending}
+					disabled={isPending}
 				>
-					{deleteProduct.isPending ? 'Loading...' : 'Delete'}
+					{isPending ? <Spinner /> : 'Delete'}
 				</Button>
 				<Button variant='primary' onClick={close} className='flex-1'>
 					Close

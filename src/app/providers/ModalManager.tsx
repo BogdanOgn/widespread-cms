@@ -1,14 +1,15 @@
 import type { FC } from 'react';
 
 import { LogoutModal } from '@/features/auth';
-import { DeleteProductModal } from '@/features/products';
+import { CreateProductModal, DeleteProductModal } from '@/features/product';
 
 import type { ModalComponentProps } from '@/shared/ui';
 import { useCloseModal, useCurrentModal } from '@/shared/ui/modal';
 
 const modals: Record<string, FC<ModalComponentProps>> = {
 	logout: LogoutModal,
-	deleteProduct: DeleteProductModal
+	deleteProduct: DeleteProductModal,
+	createProduct: CreateProductModal
 };
 
 export const ModalManager = () => {

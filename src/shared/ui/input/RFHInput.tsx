@@ -48,5 +48,5 @@ export const RHFInput = <TFieldValues extends FieldValues>({
 		);
 	}
 
-	return <Input {...field} error={fieldState.error} {...props} />;
+	return <Input {...field} value={field.value ?? ''} error={fieldState.error} {...props} />;
 };
