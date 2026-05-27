@@ -2,6 +2,7 @@
 
 @theme {
 	--color-accent: #3b82f6;
+	--color-accent-50: rgb(59, 130, 246, 0.5);
 	--color-accent-hover: #2563eb;
 	--color-success: #22c55e;
 	--color-success-hover: #1ca44e;

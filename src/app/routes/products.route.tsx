@@ -12,5 +12,8 @@ export const productsRoute = createRoute({
 	loader: ({ context: { queryClient } }) => requireUser(queryClient),
 	getParentRoute: () => authenticatedRoute,
 	path: ROUTES.PRODUCTS,
-	component: ProductsPage
+	component: ProductsPage,
+	validateSearch: (search: Record<string, unknown>) => ({
+		page: Number(search.page) > 0 ? Number(search.page) : 1
+	})
 });

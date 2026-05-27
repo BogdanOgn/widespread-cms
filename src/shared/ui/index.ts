@@ -7,3 +7,4 @@ export { Spinner } from './spinner';
 export { Badge } from './badge';
 export { Selector, type Option } from './selector';
 export { Checkbox, RHFCheckbox } from './checkbox';
+export { Pagination } from './pagination';

@@ -1,13 +1,22 @@
+import { useNavigate, useSearch } from '@tanstack/react-router';
 import { BsGenderFemale, BsGenderMale, BsPencil, BsTrash } from 'react-icons/bs';
 
 import { useProducts } from '@/features/product';
 
 import { API_URL } from '@/shared/config';
-import { Badge, Button, Spinner, Typography, useOpenModal } from '@/shared/ui';
+import { Badge, Button, Pagination, Spinner, Typography, useOpenModal } from '@/shared/ui';
+
+const PAGE_SIZE = 10;
 
 export const ProductsTable = () => {
-	const { data: products, isPending } = useProducts();
+	const { page = 1 } = useSearch({ strict: false }) as { page?: number };
+	const navigate = useNavigate();
+	const { data: products, isPending } = useProducts(PAGE_SIZE, page);
 	const openModal = useOpenModal();
+
+	const handlePageChange = (newPage: number) => {
+		navigate({ to: '.', search: { page: newPage } as never });
+	};
 
 	const handleOpenDeleteProductModal = (productId: number) => {
 		openModal('deleteProduct', { productId });
@@ -34,7 +43,7 @@ export const ProductsTable = () => {
 	}
 
 	return (
-		<div className='bg-surface shadow-primary flex-1 overflow-hidden rounded-2xl'>
+		<div className='bg-surface shadow-primary flex flex-1 flex-col overflow-hidden rounded-2xl'>
 			<table className='w-full table-fixed text-left'>
 				<thead>
 					<tr className='border-b border-gray-100'>
@@ -99,7 +108,7 @@ export const ProductsTable = () => {
 								</td>
 								<td className='typography-body-md px-5 py-3'>{product.is_published ? 'Y' : 'N'}</td>
 								<td className='typography-body-md px-5 py-3'>
-									<div className='flex gap-2'>
+									<div className='flex flex-wrap gap-2'>
 										{product.sizes.map(size => (
 											<Badge key={size.id}>{size.name}</Badge>
 										))}
@@ -130,6 +139,12 @@ export const ProductsTable = () => {
 					})}
 				</tbody>
 			</table>
+			<Pagination
+				page={products.page}
+				pages={products.pages}
+				onChange={handlePageChange}
+				className='mt-auto'
+			/>
 		</div>
 	);
 };
