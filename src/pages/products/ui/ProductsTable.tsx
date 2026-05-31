@@ -7,6 +7,7 @@ import { useProducts } from '@/features/product';
 import { useSizes } from '@/features/size';
 
 import { API_URL } from '@/shared/config';
+import { stripHtml } from '@/shared/lib';
 import { Badge, Button, Pagination, Spinner, Typography, useOpenModal } from '@/shared/ui';
 
 const PAGE_SIZE = 10;
@@ -103,7 +104,7 @@ export const ProductsTable = () => {
 									)}
 								</td>
 								<td className='typography-body-md px-5 py-3 text-gray-500'>
-									{product.description}
+									<div className='line-clamp-1'>{stripHtml(product.description)}</div>
 								</td>
 								<td className='typography-body-md px-5 py-3'>
 									${Number(product.price).toFixed(2)}

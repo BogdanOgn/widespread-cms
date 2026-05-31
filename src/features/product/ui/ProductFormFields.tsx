@@ -5,7 +5,7 @@ import type { MultiValue, SingleValue } from 'react-select';
 import type { PendingImage } from '@/entities/image';
 
 import type { Option } from '@/shared/ui';
-import { RHFCheckbox, RHFInput, Selector } from '@/shared/ui';
+import { RHFCheckbox, RHFInput, RHFRichTextEditor, Selector } from '@/shared/ui';
 
 import { genderOptions } from '../config';
 import type { CreateProductFormValues } from '../lib';
@@ -33,12 +33,6 @@ export const ProductFormFields = ({
 		<div className='mb-10 flex flex-col gap-5'>
 			<RHFInput name='title' hint='Product title' placeholder='Enter title' control={control} />
 			<RHFInput name='slug' hint='Product slug' control={control} readOnly />
-			<RHFInput
-				name='description'
-				hint='Product description'
-				placeholder='Enter description'
-				control={control}
-			/>
 			<RHFInput
 				name='price'
 				hint='Product price'
@@ -107,6 +101,8 @@ export const ProductFormFields = ({
 					/>
 				)}
 			/>
+			<RHFRichTextEditor name='description' hint='Product description' control={control} />
+
 			<RHFCheckbox name='is_published' control={control} label='Publish product' />
 			<ProductImageUpload images={images} onChange={onImagesChange} />
 		</div>
