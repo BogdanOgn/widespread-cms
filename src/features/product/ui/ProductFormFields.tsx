@@ -31,17 +31,29 @@ export const ProductFormFields = ({
 }: Props) => {
 	return (
 		<div className='mb-10 flex flex-col gap-5'>
-			<RHFInput name='title' placeholder='Product title *' control={control} />
-			<RHFInput name='slug' placeholder='Product slug *' control={control} readOnly />
-			<RHFInput name='description' placeholder='Product description *' control={control} />
-			<RHFInput name='price' placeholder='Product price *' control={control} mask={Number} />
+			<RHFInput name='title' hint='Product title' placeholder='Enter title' control={control} />
+			<RHFInput name='slug' hint='Product slug' control={control} readOnly />
+			<RHFInput
+				name='description'
+				hint='Product description'
+				placeholder='Enter description'
+				control={control}
+			/>
+			<RHFInput
+				name='price'
+				hint='Product price'
+				placeholder='Enter price'
+				control={control}
+				mask={Number}
+			/>
 			<Controller
 				name='gender'
 				control={control}
 				render={({ field: { value, onChange }, fieldState }) => (
 					<Selector
 						name='gender'
-						placeholder='Product gender'
+						hint='Product gender'
+						placeholder='Select gender'
 						options={genderOptions}
 						value={genderOptions.find(option => option.value === value)}
 						onChange={option => onChange((option as SingleValue<Option>)?.value)}
@@ -55,7 +67,8 @@ export const ProductFormFields = ({
 				render={({ field: { value, onChange }, fieldState }) => (
 					<Selector
 						name='brand_id'
-						placeholder='Product brand'
+						hint='Product gender'
+						placeholder='Select brand'
 						options={convertedBrands}
 						value={convertedBrands.find(option => option.value === value)}
 						onChange={option => onChange((option as SingleValue<Option<number>>)?.value)}
@@ -68,8 +81,9 @@ export const ProductFormFields = ({
 				control={control}
 				render={({ field, fieldState }) => (
 					<Selector
-						placeholder='Product category'
 						name='category_id'
+						hint='Product category'
+						placeholder='Select category'
 						options={convertedCategories}
 						value={convertedCategories.find(option => option.value === field.value)}
 						onChange={option => field.onChange((option as SingleValue<Option<number>>)?.value)}
@@ -83,7 +97,8 @@ export const ProductFormFields = ({
 				render={({ field: { value, onChange }, fieldState }) => (
 					<Selector
 						name='size_ids'
-						placeholder='Product sizes'
+						hint='Product sizes'
+						placeholder='Select sizes'
 						isMulti
 						options={convertedSizes}
 						value={convertedSizes.filter(option => value?.includes(option.value))}

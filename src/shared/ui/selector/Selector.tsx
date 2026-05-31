@@ -27,6 +27,7 @@ type SelectProps<T extends string | number = string> = {
 	error?: FieldError;
 	onInputChange?: (newValue: string, actionMeta: InputActionMeta) => void;
 	isMulti?: boolean;
+	hint?: string;
 };
 
 export const Selector = <T extends string | number = string>({
@@ -38,10 +39,16 @@ export const Selector = <T extends string | number = string>({
 	onChange,
 	onInputChange,
 	isMulti = false,
-	error
+	error,
+	hint
 }: SelectProps<T>) => {
 	return (
 		<div className='flex w-full flex-col gap-1.5'>
+			{hint && (
+				<Typography variant='caption' as='p'>
+					{hint}
+				</Typography>
+			)}
 			<Select
 				unstyled
 				onInputChange={onInputChange}
@@ -61,7 +68,8 @@ export const Selector = <T extends string | number = string>({
 						`px-3 py-2 cursor-pointer trs hover:bg-accent-hover ${isSelected && 'bg-accent text-white'}`,
 					placeholder: () => 'text-gray-400',
 					singleValue: () => 'text-white ',
-					multiValue: () => 'text-white bg-surface shadow-primary px-3 rounded-[4px] flex gap-2 mr-2',
+					multiValue: () =>
+						'text-white bg-surface shadow-primary px-3 rounded-[4px] flex gap-2 mr-2',
 					input: () => 'text-white cursor-pointer',
 					noOptionsMessage: () => 'text-gray-500 px-3 py-2'
 				}}

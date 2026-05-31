@@ -17,6 +17,7 @@ type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> &
 		mask?: any;
 		unmask?: boolean | 'typed';
 		onAccept?: (value: string) => void;
+		hint?: string;
 	};
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -38,6 +39,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 			readOnly,
 			required,
 			type,
+			hint,
 			...props
 		},
 		ref
@@ -46,6 +48,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
 		return (
 			<div className='flex w-full flex-col gap-1.5'>
+				{hint && (
+					<Typography variant='caption' as='p'>
+						{hint}
+					</Typography>
+				)}
 				{mask ? (
 					<IMaskInput
 						mask={mask}
