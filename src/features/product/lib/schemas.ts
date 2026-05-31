@@ -6,9 +6,9 @@ export const createProductSchema = z.object({
 	description: z.string({ error: 'Description is required' }).min(1, 'Description is required'),
 	price: z.string({ error: 'Price is required' }),
 	gender: z.enum(['male', 'female']),
-	brand_id: z.number({ error: 'Brand is required' }).positive('Brand is required'),
-	category_id: z.number({ error: 'Category is required' }).positive('Category is required'),
-	size_ids: z.array(z.number()).min(1, 'At least one size is required'),
+	brand_id: z.number({ error: 'Brand is required' }).positive(),
+	category_id: z.number({ error: 'Category is required' }).positive(),
+	size_ids: z.array(z.number()),
 	is_published: z.boolean()
 });
 

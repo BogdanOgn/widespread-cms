@@ -12,16 +12,16 @@ export interface IProduct {
 	id: number;
 	title: string;
 	description: string;
-	brand?: AttributeItem;
-	brand_id?: number;
+	brand: AttributeItem;
+	brand_id: number;
 	price: number;
 	sale_price?: number;
 	slug: string;
 	gender: 'male' | 'female';
 	is_published: boolean;
 	is_archived: boolean;
-	category?: AttributeItem;
-	category_id?: number;
+	category: AttributeItem;
+	category_id: number;
 	sizes: AttributeItem[];
 	images?: ProductImage[];
 }
@@ -29,14 +29,14 @@ export interface IProduct {
 export interface IProductCreate {
 	title: string;
 	description: string;
-	brand_id?: number;
+	brand_id: number;
 	price: number;
 	sale_price?: number;
 	slug: string;
 	gender: 'male' | 'female';
 	is_published: boolean;
 	is_archived: boolean;
-	category_id?: number;
+	category_id: number;
 	size_ids: number[];
 }
 

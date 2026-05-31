@@ -5,6 +5,9 @@ import type { IImage, IImageCreate } from '../model/types';
 export const createImage = (data: IImageCreate) =>
 	httpClient.post<IImage>('/images/create_image', data).then(r => r.data);
 
+export const updateImage = (imageId: number, data: Partial<IImageCreate>) =>
+	httpClient.patch<IImage>(`/images/update_image/${imageId}`, data).then(r => r.data);
+
 export const deleteImage = (imageId: number) =>
 	httpClient.delete(`/images/delete_image/${imageId}`);
 

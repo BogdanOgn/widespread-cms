@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 
 import type { PendingImage } from '@/entities/image';
 
@@ -46,7 +46,8 @@ export const UpdateProductModal = ({ isOpen, close }: ModalComponentProps) => {
 	const convertedCategories = useMemo(() => convertOptions(categories), [categories]);
 
 	const { control, reset, handleSubmit, setValue, watch } = useForm<CreateProductFormValues>({
-		resolver: zodResolver(createProductSchema)
+		resolver: zodResolver(createProductSchema),
+		defaultValues: { is_published: false }
 	});
 
 	const productTitle = watch('title');
@@ -76,29 +77,30 @@ export const UpdateProductModal = ({ isOpen, close }: ModalComponentProps) => {
 
 	useEffect(() => {
 		if (!productImages) return;
-		setPendingImages(
-			productImages.map(image => ({
-				alt: image.alt,
-				localId: image.id,
-				url: image.url,
-				id: image.id
-			}))
-		);
-	}, [productImages]);
+		setTimeout(() => {
+			setPendingImages(
+				productImages.map(image => ({
+					alt: image.alt,
+					localId: image.id,
+					url: image.url,
+					id: image.id
+				}))
+			);
+		}, 300);
+	}, [productImages, isOpen]);
 
-	const onSubmit = (data: CreateProductFormValues) => {
+	const onSubmit: SubmitHandler<CreateProductFormValues> = data => {
 		const brand = brands.find(b => b.id === data.brand_id);
 		const category = categories.find(c => c.id === data.category_id);
 		const selectedSizes = sizes.filter(s => data.size_ids?.includes(s.id));
 		const originalImageIds = (productImages ?? []).map(image => image.id);
-
 		updateProduct({
 			id: productId,
 			data,
 			images: pendingImages,
 			originalImageIds,
-			brand,
-			category,
+			brand: brand!,
+			category: category!,
 			sizes: selectedSizes
 		});
 		close();

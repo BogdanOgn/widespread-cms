@@ -86,6 +86,7 @@ export const ProductsTable = () => {
 						const isMale = product.gender === 'male';
 						const GenderIcon = isMale ? BsGenderMale : BsGenderFemale;
 
+						const mainImage = product.images?.find(image => image.order === 0);
 						return (
 							<tr key={product.id} className='border-b border-gray-100 last:border-0'>
 								<td className='typography-body-md px-5 py-3'>{product.id}</td>
@@ -94,11 +95,7 @@ export const ProductsTable = () => {
 									{product.images && (
 										<div className='bg-gray h-12 w-12 overflow-hidden rounded-sm'>
 											<img
-												src={
-													product.images?.length
-														? `${API_URL}${product.images[0].url}`
-														: 'nophoto.png'
-												}
+												src={mainImage ? `${API_URL}${mainImage.url}` : 'nophoto.png'}
 												alt='product image'
 												className='h-full w-full object-cover'
 											/>

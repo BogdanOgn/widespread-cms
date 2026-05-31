@@ -1,4 +1,4 @@
-import type { FieldErrors } from 'react-hook-form';
+import type { FieldError } from 'react-hook-form';
 import Select, {
 	type ActionMeta,
 	type InputActionMeta,
@@ -6,6 +6,8 @@ import Select, {
 	type PropsValue,
 	type SingleValue
 } from 'react-select';
+
+import { Typography } from '../typography';
 
 export type Option<T extends string | number = string> = {
 	label: string | number;
@@ -22,7 +24,7 @@ type SelectProps<T extends string | number = string> = {
 		newValue: SingleValue<Option<T>> | MultiValue<Option<T>>,
 		actionMeta: ActionMeta<Option<T>>
 	) => void;
-	errors?: FieldErrors;
+	error?: FieldError;
 	onInputChange?: (newValue: string, actionMeta: InputActionMeta) => void;
 	isMulti?: boolean;
 };
@@ -35,37 +37,45 @@ export const Selector = <T extends string | number = string>({
 	value,
 	onChange,
 	onInputChange,
-	isMulti = false
+	isMulti = false,
+	error
 }: SelectProps<T>) => {
 	return (
-		<Select
-			unstyled
-			onInputChange={onInputChange}
-			isClearable={false}
-			isMulti={isMulti}
-			onChange={onChange}
-			placeholder={placeholder}
-			name={name}
-			defaultValue={defaultValue}
-			options={options}
-			classNamePrefix='select'
-			classNames={{
-				control: () =>
-					'h-12 border-none rounded-md text-red px-4 bg-background cursor-pointer shadow-primary',
-				menu: () => 'mt-1 bg-background shadow-primary overflow-hidden rounded-md shadow-lg z-50',
-				option: ({ isSelected }) =>
-					`px-3 py-2 cursor-pointer trs hover:bg-accent-hover ${isSelected && 'bg-accent text-white'}`,
-				placeholder: () => 'text-gray-400',
-				singleValue: () => 'text-white ',
-				multiValue: () => 'text-white bg-surface shadow-primary px-3 rounded-[4px] flex gap-2 mr-2',
-				input: () => 'text-white text-red cursor-pointer',
-				noOptionsMessage: () => 'text-gray-500 px-3 py-2'
-			}}
-			styles={{
-				option: () => ({ cursor: 'pointer' }),
-				control: () => ({ cursor: 'pointer', display: 'flex', justifyContent: 'space-between' })
-			}}
-			value={value}
-		/>
+		<div className='flex w-full flex-col gap-1.5'>
+			<Select
+				unstyled
+				onInputChange={onInputChange}
+				isClearable={false}
+				isMulti={isMulti}
+				onChange={onChange}
+				placeholder={placeholder}
+				name={name}
+				defaultValue={defaultValue}
+				options={options}
+				classNamePrefix='select'
+				classNames={{
+					control: () =>
+						`h-12 rounded-md border px-4 bg-background cursor-pointer shadow-primary ${error ? 'border-error' : 'border-none'}`,
+					menu: () => 'mt-1 bg-background shadow-primary overflow-hidden rounded-md shadow-lg z-50',
+					option: ({ isSelected }) =>
+						`px-3 py-2 cursor-pointer trs hover:bg-accent-hover ${isSelected && 'bg-accent text-white'}`,
+					placeholder: () => 'text-gray-400',
+					singleValue: () => 'text-white ',
+					multiValue: () => 'text-white bg-surface shadow-primary px-3 rounded-[4px] flex gap-2 mr-2',
+					input: () => 'text-white cursor-pointer',
+					noOptionsMessage: () => 'text-gray-500 px-3 py-2'
+				}}
+				styles={{
+					option: () => ({ cursor: 'pointer' }),
+					control: () => ({ cursor: 'pointer', display: 'flex', justifyContent: 'space-between' })
+				}}
+				value={value}
+			/>
+			{error?.message && (
+				<Typography variant='error' as='small'>
+					{error.message}
+				</Typography>
+			)}
+		</div>
 	);
 };

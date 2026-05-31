@@ -33,7 +33,7 @@ export const RHFCheckbox = <TFieldValues extends FieldValues>({
 			ref={field.ref}
 			name={field.name}
 			checked={!!field.value}
-			onChange={field.onChange}
+			onChange={e => field.onChange(e.target.checked)}
 			onBlur={field.onBlur}
 			error={fieldState.error}
 			{...props}

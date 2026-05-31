@@ -1,6 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { type PendingImage, createImage, deleteImage, imageQueries } from '@/entities/image';
+import {
+	type PendingImage,
+	createImage,
+	deleteImage,
+	imageQueries,
+	updateImage
+} from '@/entities/image';
 import {
 	type IProduct,
 	type IProductResponse,
@@ -17,9 +23,9 @@ export type UpdateProductPayload = {
 	data: CreateProductFormValues;
 	images: PendingImage[];
 	originalImageIds: number[];
-	brand?: AttributeItem;
-	category?: AttributeItem;
-	sizes?: AttributeItem[];
+	brand: AttributeItem;
+	category: AttributeItem;
+	sizes: AttributeItem[];
 };
 
 const updateProductWithImage = async ({
@@ -31,17 +37,25 @@ const updateProductWithImage = async ({
 	const updated = await updateProduct(id, {
 		...data,
 		price: Number(data.price),
-		is_archived: false
+		is_archived: false,
+		size_ids: data.size_ids ?? []
 	});
 
 	const keptIds = new Set(images.filter(img => img.id).map(img => img.id!));
 	const toDelete = originalImageIds.filter(imageId => !keptIds.has(imageId));
+	const toKeep = images.filter(img => img.id);
 	const toCreate = images.filter(img => !img.id);
 
 	await Promise.all(toDelete.map(imageId => deleteImage(imageId)));
+	await Promise.all(toKeep.map(img => updateImage(img.id!, { order: images.indexOf(img) })));
 	await Promise.all(
-		toCreate.map((img, index) =>
-			createImage({ product_id: updated.id, url: img.url, alt: img.alt, order: index })
+		toCreate.map(img =>
+			createImage({
+				product_id: updated.id,
+				url: img.url,
+				alt: img.alt,
+				order: images.indexOf(img)
+			})
 		)
 	);
 	return updated;

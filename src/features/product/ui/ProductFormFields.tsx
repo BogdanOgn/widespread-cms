@@ -38,55 +38,57 @@ export const ProductFormFields = ({
 			<Controller
 				name='gender'
 				control={control}
-				render={({ field: { value, onChange } }) => (
+				render={({ field: { value, onChange }, fieldState }) => (
 					<Selector
 						name='gender'
 						placeholder='Product gender'
 						options={genderOptions}
 						value={genderOptions.find(option => option.value === value)}
 						onChange={option => onChange((option as SingleValue<Option>)?.value)}
+						error={fieldState.error}
 					/>
 				)}
 			/>
 			<Controller
 				name='brand_id'
 				control={control}
-				render={({ field: { value, onChange } }) => (
+				render={({ field: { value, onChange }, fieldState }) => (
 					<Selector
 						name='brand_id'
 						placeholder='Product brand'
 						options={convertedBrands}
 						value={convertedBrands.find(option => option.value === value)}
 						onChange={option => onChange((option as SingleValue<Option<number>>)?.value)}
+						error={fieldState.error}
 					/>
 				)}
 			/>
 			<Controller
 				name='category_id'
 				control={control}
-				render={({ field }) => (
+				render={({ field, fieldState }) => (
 					<Selector
 						placeholder='Product category'
 						name='category_id'
 						options={convertedCategories}
 						value={convertedCategories.find(option => option.value === field.value)}
 						onChange={option => field.onChange((option as SingleValue<Option<number>>)?.value)}
+						error={fieldState.error}
 					/>
 				)}
 			/>
 			<Controller
 				name='size_ids'
 				control={control}
-				render={({ field: { value, onChange } }) => (
+				render={({ field: { value, onChange }, fieldState }) => (
 					<Selector
 						name='size_ids'
 						placeholder='Product sizes'
 						isMulti
 						options={convertedSizes}
 						value={convertedSizes.filter(option => value?.includes(option.value))}
-						onChange={option =>
-							onChange((option as MultiValue<Option<number>>).map(o => o.value))
-						}
+						onChange={option => onChange((option as MultiValue<Option<number>>).map(o => o.value))}
+						error={fieldState.error}
 					/>
 				)}
 			/>

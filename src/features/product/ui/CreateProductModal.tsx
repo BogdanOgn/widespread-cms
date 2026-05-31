@@ -38,7 +38,7 @@ export const CreateProductModal = ({ isOpen, close }: ModalComponentProps) => {
 
 	const { handleSubmit, control, watch, setValue, reset } = useForm<CreateProductFormValues>({
 		resolver: zodResolver(createProductSchema),
-		defaultValues: { gender: 'male' }
+		defaultValues: { gender: 'male', is_published: false }
 	});
 
 	const { mutateAsync: createProduct, isPending } = useCreateProduct();
