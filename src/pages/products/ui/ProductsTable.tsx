@@ -21,12 +21,14 @@ import {
 	useOpenModal
 } from '@/shared/ui';
 
-const PAGE_SIZE = 10;
-
 export const ProductsTable = () => {
-	const { page = 1 } = useSearch({ strict: false }) as { page?: number };
+	const { page = 1, page_count = 10 } = useSearch({ strict: false }) as {
+		page?: number;
+		page_count?: number;
+	};
+	const pageSize = Number(page_count);
 	const navigate = useNavigate();
-	const { data: products, isPending, isFetching } = useProducts(PAGE_SIZE, page);
+	const { data: products, isPending, isFetching } = useProducts(pageSize, page);
 	const openModal = useOpenModal();
 	const { mutate: bulkPublish, isPending: isPublishing } = useBulkPublishProducts();
 
@@ -72,7 +74,7 @@ export const ProductsTable = () => {
 
 	const handlePageChange = (newPage: number) => {
 		setSelectedIds(new Set());
-		navigate({ to: '.', search: { page: newPage } as never });
+		navigate({ to: '.', search: { page: newPage, page_count } as never });
 	};
 
 	const handleOpenDeleteProductModal = (productId: number) => {

@@ -35,7 +35,7 @@ export const Sidebar = () => {
 	};
 
 	return (
-		<div className='shadow-primary bg-surface flex h-screen flex-col rounded-tr-2xl rounded-br-2xl p-5'>
+		<div className='shadow-primary bg-surface sticky top-0 flex h-screen flex-col rounded-tr-2xl rounded-br-2xl p-5'>
 			<Link to={ROUTES.HOME} className='hover:text-accent-hover trs typography-h2 mb-9 text-center'>
 				Widespread CMS
 			</Link>

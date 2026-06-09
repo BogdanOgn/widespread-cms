@@ -2,6 +2,7 @@ import { ResourceLayout } from '@/widgets/resource-layout';
 
 import { useBrands } from '@/features/brand';
 import { useCategories } from '@/features/category';
+import { ProductsFilters } from '@/features/product';
 import { useSizes } from '@/features/size';
 
 import { Button, useOpenModal } from '@/shared/ui';
@@ -27,6 +28,7 @@ export const ProductsPage = () => {
 						Add product
 					</Button>
 				}
+				filters={<ProductsFilters />}
 			>
 				<ProductsTable />
 			</ResourceLayout>

@@ -16,7 +16,7 @@ export type Option<T extends string | number = string> = {
 
 type SelectProps<T extends string | number = string> = {
 	options: Option<T>[];
-	placeholder: string;
+	placeholder?: string;
 	name: string;
 	defaultValue?: Option<T>;
 	value?: SingleValue<Option<T>> | MultiValue<Option<T>> | PropsValue<Option<T>>;
