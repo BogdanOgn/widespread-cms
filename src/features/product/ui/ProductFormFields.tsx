@@ -7,7 +7,7 @@ import type { PendingImage } from '@/entities/image';
 import type { Option } from '@/shared/ui';
 import { RHFCheckbox, RHFInput, RHFRichTextEditor, Selector } from '@/shared/ui';
 
-import { genderOptions } from '../config';
+import { GENDER_OPTIONS } from '../config';
 import type { CreateProductFormValues } from '../lib';
 
 import { ProductImageUpload } from './ProductImageUpload';
@@ -48,8 +48,8 @@ export const ProductFormFields = ({
 						name='gender'
 						hint='Product gender'
 						placeholder='Select gender'
-						options={genderOptions}
-						value={genderOptions.find(option => option.value === value)}
+						options={GENDER_OPTIONS}
+						value={GENDER_OPTIONS.find(option => option.value === value)}
 						onChange={option => onChange((option as SingleValue<Option>)?.value)}
 						error={fieldState.error}
 					/>

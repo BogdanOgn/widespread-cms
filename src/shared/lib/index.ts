@@ -1,3 +1,3 @@
 export { createStore } from './store';
-export { convertOptions, stripHtml } from './utils';
-export { useUploadImage } from './hooks';
+export { convertOptions, stripHtml, toNumber, toBoolean } from './utils';
+export { useUploadImage, useDebouncedValue } from './hooks';

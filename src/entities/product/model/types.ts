@@ -47,3 +47,27 @@ export interface IProductResponse {
 	page_size: number;
 	pages: number;
 }
+
+export type ProductSortBy = 'id' | 'title' | 'price';
+export type ProductOrder = 'asc' | 'desc';
+
+export interface IProductFilters {
+	search?: string;
+	category_id?: number;
+	brand_id?: number;
+	gender?: 'male' | 'female';
+	is_published?: boolean;
+	is_archived?: boolean;
+	min_price?: number;
+	max_price?: number;
+	size_ids?: number[];
+	sort_by?: ProductSortBy;
+	order?: ProductOrder;
+	page?: number;
+	page_size?: number;
+}
+
+export type IProductsSearch = Omit<IProductFilters, 'page_size'> & {
+	page: number;
+	page_size: number;
+};

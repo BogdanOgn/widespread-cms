@@ -1,0 +1,1 @@
+export { validateProductsSearch } from './validateProductsSearch';

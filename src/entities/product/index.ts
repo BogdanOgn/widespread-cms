@@ -1,4 +1,12 @@
-export type { IProduct, IProductCreate, IProductResponse } from './model/types';
+export type {
+	IProduct,
+	IProductCreate,
+	IProductResponse,
+	IProductFilters,
+	IProductsSearch,
+	ProductSortBy,
+	ProductOrder
+} from './model/types';
 export {
 	getProducts,
 	getProduct,
@@ -7,3 +15,4 @@ export {
 	productQueries,
 	updateProduct
 } from './api';
+export { validateProductsSearch } from './lib';

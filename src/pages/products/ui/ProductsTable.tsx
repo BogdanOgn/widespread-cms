@@ -7,7 +7,7 @@ import { useCategories } from '@/features/category';
 import { useBulkPublishProducts, useProducts } from '@/features/product';
 import { useSizes } from '@/features/size';
 
-import type { IProduct } from '@/entities/product';
+import type { IProduct, IProductsSearch } from '@/entities/product';
 
 import { API_URL } from '@/shared/config';
 import { stripHtml } from '@/shared/lib';
@@ -22,13 +22,28 @@ import {
 } from '@/shared/ui';
 
 export const ProductsTable = () => {
-	const { page = 1, page_count = 10 } = useSearch({ strict: false }) as {
-		page?: number;
-		page_count?: number;
-	};
-	const pageSize = Number(page_count);
+	const search = useSearch({ strict: false }) as IProductsSearch;
+	const { page = 1, page_size = 10 } = search;
 	const navigate = useNavigate();
-	const { data: products, isPending, isFetching } = useProducts(pageSize, page);
+	const {
+		data: products,
+		isPending,
+		isFetching
+	} = useProducts({
+		page,
+		page_size,
+		search: search.search,
+		category_id: search.category_id,
+		brand_id: search.brand_id,
+		gender: search.gender,
+		is_published: search.is_published,
+		is_archived: search.is_archived,
+		min_price: search.min_price,
+		max_price: search.max_price,
+		size_ids: search.size_ids,
+		sort_by: search.sort_by,
+		order: search.order
+	});
 	const openModal = useOpenModal();
 	const { mutate: bulkPublish, isPending: isPublishing } = useBulkPublishProducts();
 
@@ -74,7 +89,8 @@ export const ProductsTable = () => {
 
 	const handlePageChange = (newPage: number) => {
 		setSelectedIds(new Set());
-		navigate({ to: '.', search: { page: newPage, page_count } as never });
+
+		navigate({ to: '.', search: prev => ({ ...prev, page: newPage, page_size }) });
 	};
 
 	const handleOpenDeleteProductModal = (productId: number) => {

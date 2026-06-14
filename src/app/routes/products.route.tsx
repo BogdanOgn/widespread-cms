@@ -4,6 +4,8 @@ import { ProductsPage } from '@/pages/products';
 
 import { requireUser } from '@/features/auth';
 
+import { validateProductsSearch } from '@/entities/product';
+
 import { ROUTES } from '@/shared/config';
 
 import { authenticatedRoute } from './_authenticated.route';
@@ -13,7 +15,5 @@ export const productsRoute = createRoute({
 	getParentRoute: () => authenticatedRoute,
 	path: ROUTES.PRODUCTS,
 	component: ProductsPage,
-	validateSearch: (search: Record<string, unknown>) => ({
-		page: Number(search.page) > 0 ? Number(search.page) : 1
-	})
+	validateSearch: validateProductsSearch
 });

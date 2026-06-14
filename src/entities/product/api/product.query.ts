@@ -1,5 +1,7 @@
 import { keepPreviousData, queryOptions } from '@tanstack/react-query';
 
+import type { IProductFilters } from '../model/types';
+
 import { getProduct, getProducts } from './product.api';
 
 export const productQueries = {
@@ -9,10 +11,10 @@ export const productQueries = {
 		queryKey: [...productQueries.all().queryKey, 'list'] as const
 	}),
 
-	list: (pageSize: number = 10, page: number = 1) =>
+	list: (filters: IProductFilters = {}) =>
 		queryOptions({
-			queryKey: [...productQueries.lists().queryKey, pageSize, page] as const,
-			queryFn: () => getProducts(pageSize, page),
+			queryKey: [...productQueries.lists().queryKey, filters] as const,
+			queryFn: () => getProducts(filters),
 			placeholderData: keepPreviousData
 		}),
 

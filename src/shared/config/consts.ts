@@ -1,6 +1,6 @@
 import type { Option } from '@/shared/ui';
 
-export const PAGE_COUNTS: Option<number>[] = [
+export const PAGE_SIZES: Option<number>[] = [
 	{
 		label: '5',
 		value: 5
