@@ -115,6 +115,7 @@ export const useUpdateProduct = () => {
 			qc.invalidateQueries({ queryKey: productQueries.lists().queryKey });
 			qc.invalidateQueries({ queryKey: productQueries.product(id).queryKey });
 			qc.invalidateQueries({ queryKey: imageQueries.byProduct(id).queryKey });
+			qc.invalidateQueries(productQueries.stats());
 		}
 	});
 };

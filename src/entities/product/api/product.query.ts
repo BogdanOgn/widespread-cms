@@ -2,7 +2,7 @@ import { keepPreviousData, queryOptions } from '@tanstack/react-query';
 
 import type { IProductFilters } from '../model/types';
 
-import { getProduct, getProducts } from './product.api';
+import { getProduct, getProducts, getProductsStats } from './product.api';
 
 export const productQueries = {
 	all: () => ({ queryKey: ['products'] as const }),
@@ -22,5 +22,11 @@ export const productQueries = {
 		queryOptions({
 			queryKey: [...productQueries.all().queryKey, productId],
 			queryFn: () => getProduct(productId)
+		}),
+
+	stats: () =>
+		queryOptions({
+			queryKey: [...productQueries.all().queryKey, 'stats'] as const,
+			queryFn: getProductsStats
 		})
 };

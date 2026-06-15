@@ -28,6 +28,7 @@ export const useCreateProduct = () => {
 		mutationFn: createProductWithImages,
 		onSettled: () => {
 			qc.invalidateQueries(productQueries.lists());
+			qc.invalidateQueries(productQueries.stats());
 		}
 	});
 };

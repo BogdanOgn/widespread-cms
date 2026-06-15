@@ -5,10 +5,15 @@ export type {
 	IProductFilters,
 	IProductsSearch,
 	ProductSortBy,
-	ProductOrder
+	ProductOrder,
+	IProductStats,
+	IProductStatsResponse,
+	IProductStatsAttribute,
+	IProductStatsPriceBucket
 } from './model/types';
 export {
 	getProducts,
+	getProductsStats,
 	getProduct,
 	createProduct,
 	deleteProduct,

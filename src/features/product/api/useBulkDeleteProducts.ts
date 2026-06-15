@@ -8,6 +8,7 @@ export const useBulkDeleteProducts = () => {
 		mutationFn: (ids: number[]) => Promise.all(ids.map(id => deleteProduct(id))),
 		onSuccess: () => {
 			qc.invalidateQueries(productQueries.lists());
+			qc.invalidateQueries(productQueries.stats());
 		}
 	});
 };

@@ -2,7 +2,9 @@ import {
 	type IProduct,
 	type IProductCreate,
 	type IProductFilters,
-	type IProductResponse
+	type IProductResponse,
+	type IProductStats,
+	type IProductStatsResponse
 } from '@/entities/product';
 
 import { httpClient } from '@/shared/api';
@@ -26,6 +28,23 @@ export const getProducts = (filters: IProductFilters = {}) => {
 		.get<IProductResponse>(`/products/get_products?${params.toString()}`)
 		.then(r => r.data);
 };
+
+const normalizeStats = (raw: IProductStatsResponse): IProductStats => ({
+	...raw,
+	price: {
+		min: Number(raw.price.min),
+		max: Number(raw.price.max),
+		avg: Number(raw.price.avg)
+	},
+	price_buckets: raw.price_buckets.map(bucket => ({
+		from: Number(bucket.from),
+		to: bucket.to === null ? null : Number(bucket.to),
+		count: bucket.count
+	}))
+});
+
+export const getProductsStats = () =>
+	httpClient.get<IProductStatsResponse>('/products/stats').then(r => normalizeStats(r.data));
 
 export const createProduct = (data: IProductCreate) =>
 	httpClient.post<IProduct>('/products/create_product', data).then(r => r.data);

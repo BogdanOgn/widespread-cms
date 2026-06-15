@@ -1,4 +1,5 @@
 export { useProducts } from './useProducts';
+export { useProductsStats } from './useProductsStats';
 export { useDeleteProduct } from './useDeleteProduct';
 export { useCreateProduct } from './useCreateProduct';
 export { useProduct } from './useProduct';

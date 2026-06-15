@@ -1,5 +1,6 @@
 export {
 	useProducts,
+	useProductsStats,
 	useProductImages,
 	useBulkDeleteProducts,
 	useBulkPublishProducts

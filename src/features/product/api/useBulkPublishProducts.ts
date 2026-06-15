@@ -30,6 +30,7 @@ export const useBulkPublishProducts = () => {
 			),
 		onSuccess: () => {
 			qc.invalidateQueries(productQueries.lists());
+			qc.invalidateQueries(productQueries.stats());
 		}
 	});
 };

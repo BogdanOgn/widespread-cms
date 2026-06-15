@@ -8,6 +8,7 @@ export const useDeleteProduct = () => {
 		mutationFn: deleteProduct,
 		onSuccess: () => {
 			qc.invalidateQueries(productQueries.lists());
+			qc.invalidateQueries(productQueries.stats());
 		}
 	});
 };

@@ -71,3 +71,48 @@ export type IProductsSearch = Omit<IProductFilters, 'page_size'> & {
 	page: number;
 	page_size: number;
 };
+
+export interface IProductStatsAttribute {
+	id: number;
+	name: string;
+	count: number;
+}
+
+export interface IProductStatsPriceBucket {
+	from: number;
+	to: number | null;
+	count: number;
+}
+
+type Price = {
+	min: number;
+	max: number;
+	avg: number;
+};
+
+type Gender = {
+	male: number;
+	female: number;
+};
+
+export interface IProductStats {
+	total: number;
+	published: number;
+	archived: number;
+	drafts: number;
+	on_sale: number;
+	price: Price;
+	by_category: IProductStatsAttribute[];
+	by_brand: IProductStatsAttribute[];
+	by_gender: Gender;
+	price_buckets: IProductStatsPriceBucket[];
+}
+
+export interface IProductStatsResponse extends Omit<IProductStats, 'price' | 'price_buckets'> {
+	price: Price;
+	price_buckets: Array<{
+		from: string;
+		to: string | null;
+		count: number;
+	}>;
+}
