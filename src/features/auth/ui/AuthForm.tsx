@@ -27,7 +27,7 @@ export const AuthForm = () => {
 		if (login.error) {
 			login.reset();
 		}
-	}, [username, password, login]);
+	}, [username, password]);
 
 	return (
 		<form
