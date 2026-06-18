@@ -3,6 +3,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import clsx from 'clsx';
 
+import { useLockBody } from '@/shared/lib';
 import { Portal } from '@/shared/ui';
 
 import './modal.scss';
@@ -17,6 +18,8 @@ type ModalProps = {
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(
 	({ isOpen, close, direction = 'center', className, children }, ref) => {
+		useLockBody(isOpen);
+
 		const nodeRef = useRef<HTMLDivElement | null>(null);
 		const handleRef = useCallback(
 			(el: HTMLDivElement | null) => {
