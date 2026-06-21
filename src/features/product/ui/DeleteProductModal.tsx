@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import {
 	Button,
 	Modal,
@@ -10,6 +12,7 @@ import {
 import { useDeleteProduct } from '../api';
 
 export const DeleteProductModal = ({ isOpen, close }: ModalComponentProps) => {
+	const { t } = useTranslation();
 	const modalPayload = useModalPayload<{ productId: number } | null>();
 	const { mutateAsync: deleteProduct, isPending } = useDeleteProduct();
 
@@ -25,7 +28,7 @@ export const DeleteProductModal = ({ isOpen, close }: ModalComponentProps) => {
 	return (
 		<Modal isOpen={isOpen} close={close} className='shadow-primary rounded-2xl p-6'>
 			<Typography variant='h3' as='h3' className='mb-6 text-center'>
-				Are you sure you want to delete product with {modalPayload?.productId} id?
+				{t('modals.deleteProduct.title', { id: modalPayload?.productId })}
 			</Typography>
 			<div className='flex gap-3'>
 				<Button
@@ -34,10 +37,10 @@ export const DeleteProductModal = ({ isOpen, close }: ModalComponentProps) => {
 					className='flex-1'
 					disabled={isPending}
 				>
-					{isPending ? <Spinner /> : 'Delete'}
+					{isPending ? <Spinner /> : t('modals.deleteProduct.confirm')}
 				</Button>
 				<Button variant='primary' onClick={close} className='flex-1'>
-					Close
+					{t('common.close')}
 				</Button>
 			</div>
 		</Modal>

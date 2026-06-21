@@ -7,17 +7,18 @@ import { ChartCard } from '@/shared/ui';
 import { CHART_COLORS, tooltipContentStyle } from '../lib/chart';
 
 type PriceHistogramProps = {
+	title: string;
 	data: IProductStatsPriceBucket[];
 };
 
 const bucketLabel = (bucket: IProductStatsPriceBucket) =>
 	bucket.to === null ? `$${bucket.from}+` : `$${bucket.from}–${bucket.to}`;
 
-export const PriceHistogram = ({ data }: PriceHistogramProps) => {
+export const PriceHistogram = ({ title, data }: PriceHistogramProps) => {
 	const chartData = data.map(bucket => ({ label: bucketLabel(bucket), count: bucket.count }));
 
 	return (
-		<ChartCard title='Price distribution'>
+		<ChartCard title={title}>
 			<ResponsiveContainer width='100%' height='100%'>
 				<BarChart data={chartData} margin={{ left: 0, right: 16 }}>
 					<CartesianGrid vertical={false} stroke={CHART_COLORS.grid} />

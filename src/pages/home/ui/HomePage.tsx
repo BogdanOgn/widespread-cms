@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { useProductsStats } from '@/features/product';
 
 import { Spinner, StatCard, Typography } from '@/shared/ui';
@@ -7,6 +9,7 @@ import { GenderChart } from './GenderChart';
 import { PriceHistogram } from './PriceHistogram';
 
 export const HomePage = () => {
+	const { t } = useTranslation();
 	const { data: stats, isPending, isError, isFetching } = useProductsStats();
 
 	if (isPending) {
@@ -14,7 +17,7 @@ export const HomePage = () => {
 			<main className='flex h-full items-center justify-center p-5'>
 				<div className='flex items-center gap-4'>
 					<Spinner />
-					<Typography variant='body'>Loading dashboard…</Typography>
+					<Typography variant='body'>{t('home.loading')}</Typography>
 				</div>
 			</main>
 		);
@@ -23,7 +26,7 @@ export const HomePage = () => {
 	if (isError || !stats) {
 		return (
 			<main className='flex h-full items-center justify-center p-5'>
-				<Typography variant='error'>Failed to load dashboard stats.</Typography>
+				<Typography variant='error'>{t('home.failed')}</Typography>
 			</main>
 		);
 	}
@@ -39,33 +42,33 @@ export const HomePage = () => {
 			)}
 			<div className='bg-surface shadow-primary rounded-2xl p-5'>
 				<Typography variant='h1' as='h1'>
-					Home Dashboard
+					{t('home.title')}
 				</Typography>
 			</div>
 
 			<div className='grid grid-cols-2 gap-5 lg:grid-cols-4'>
-				<StatCard label='Total products' value={stats.total} accent='accent' />
-				<StatCard label='Published' value={stats.published} accent='success' />
-				<StatCard label='Drafts' value={stats.drafts} />
-				<StatCard label='Archived' value={stats.archived} accent='error' />
-				<StatCard label='On sale' value={stats.on_sale} />
-				<StatCard label='Min price' value={formatPrice(stats.price.min)} />
-				<StatCard label='Avg price' value={formatPrice(stats.price.avg)} />
-				<StatCard label='Max price' value={formatPrice(stats.price.max)} />
+				<StatCard label={t('home.total')} value={stats.total} accent='accent' />
+				<StatCard label={t('home.published')} value={stats.published} accent='success' />
+				<StatCard label={t('home.drafts')} value={stats.drafts} />
+				<StatCard label={t('home.archived')} value={stats.archived} accent='error' />
+				<StatCard label={t('home.onSale')} value={stats.on_sale} />
+				<StatCard label={t('home.minPrice')} value={formatPrice(stats.price.min)} />
+				<StatCard label={t('home.avgPrice')} value={formatPrice(stats.price.avg)} />
+				<StatCard label={t('home.maxPrice')} value={formatPrice(stats.price.max)} />
 			</div>
 
 			<div className='grid grid-cols-1 gap-5 lg:grid-cols-3'>
-				<GenderChart data={stats.by_gender} />
+				<GenderChart title={t('home.byGender')} data={stats.by_gender} />
 				<AttributeBarChart
-					title='Top categories'
+					title={t('home.topCategories')}
 					data={stats.by_category}
 					className='lg:col-span-2'
 				/>
 			</div>
 
 			<div className='grid grid-cols-1 gap-5 lg:grid-cols-2'>
-				<AttributeBarChart title='Top brands' data={stats.by_brand} />
-				<PriceHistogram data={stats.price_buckets} />
+				<AttributeBarChart title={t('home.topBrands')} data={stats.by_brand} />
+				<PriceHistogram title={t('home.priceDistribution')} data={stats.price_buckets} />
 			</div>
 		</main>
 	);

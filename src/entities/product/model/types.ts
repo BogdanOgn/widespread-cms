@@ -18,6 +18,7 @@ export interface IProduct {
 	sale_price?: number;
 	slug: string;
 	gender: 'male' | 'female';
+	gender_label: 'Male' | 'Female' | 'Мужской' | 'Женский';
 	is_published: boolean;
 	is_archived: boolean;
 	category: AttributeItem;

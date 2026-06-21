@@ -1,5 +1,6 @@
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BsGenderFemale, BsGenderMale, BsPencil, BsTrash } from 'react-icons/bs';
 
 import { useBrands } from '@/features/brand';
@@ -10,6 +11,7 @@ import { useSizes } from '@/features/size';
 import type { IProduct, IProductsSearch } from '@/entities/product';
 
 import { API_URL } from '@/shared/config';
+import { useLanguage } from '@/shared/i18n';
 import { stripHtml } from '@/shared/lib';
 import {
 	Badge,
@@ -22,6 +24,8 @@ import {
 } from '@/shared/ui';
 
 export const ProductsTable = () => {
+	const { t } = useTranslation();
+	const { language } = useLanguage();
 	const search = useSearch({ strict: false }) as IProductsSearch;
 	const { page = 1, page_size = 10 } = search;
 	const navigate = useNavigate();
@@ -45,6 +49,7 @@ export const ProductsTable = () => {
 		order: search.order
 	});
 	const openModal = useOpenModal();
+
 	const { mutate: bulkPublish, isPending: isPublishing } = useBulkPublishProducts();
 
 	const { data: brands = [] } = useBrands();
@@ -120,7 +125,7 @@ export const ProductsTable = () => {
 			<div className='bg-surface shadow-primary flex-center flex flex-1 rounded-2xl p-5'>
 				<div className='flex gap-4'>
 					<Spinner />
-					<Typography variant='body'>Loading</Typography>
+					<Typography variant='body'>{t('products.loading')}</Typography>
 				</div>
 			</div>
 		);
@@ -128,7 +133,7 @@ export const ProductsTable = () => {
 	if (!products?.items.length) {
 		return (
 			<div className='bg-surface shadow-primary flex-center flex h-full flex-1 rounded-2xl p-5'>
-				<Typography variant='body'>No products found.</Typography>
+				<Typography variant='body'>{t('products.noFound')}</Typography>
 			</div>
 		);
 	}
@@ -144,7 +149,7 @@ export const ProductsTable = () => {
 			{selectedCount > 0 && (
 				<div className='flex items-center gap-3 border-b border-gray-100 px-5 py-3'>
 					<Typography variant='body' className='text-gray-500'>
-						{selectedCount} selected
+						{selectedCount} {t('products.selected')}
 					</Typography>
 					<div className='ml-auto flex gap-2'>
 						<Button
@@ -177,21 +182,33 @@ export const ProductsTable = () => {
 							<Checkbox checked={allPageSelected} onChange={toggleSelectAll} />
 						</th>
 						<th className='typography-caption w-16 px-5 py-3 font-medium text-gray-500'>ID</th>
-						<th className='typography-caption w-50 px-5 py-3 font-medium text-gray-500'>Name</th>
-						<th className='typography-caption w-22 px-5 py-3 font-medium text-gray-500'>Images</th>
+						<th className='typography-caption w-50 px-5 py-3 font-medium text-gray-500'>
+							{t('products.name')}
+						</th>
+						<th className='typography-caption w-22 px-5 py-3 font-medium text-gray-500'>
+							{t('products.images')}
+						</th>
 						<th className='typography-caption w-80 px-5 py-3 font-medium text-gray-500'>
-							Description
+							{t('products.description')}
 						</th>
-						<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>Price</th>
-						<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>Brand</th>
 						<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
-							Category
+							{t('products.price')}
 						</th>
-						<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>Gender</th>
 						<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
-							Published
+							{t('products.brand')}
 						</th>
-						<th className='typography-caption px-5 py-3 font-medium text-gray-500'>Sizes</th>
+						<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
+							{t('products.category')}
+						</th>
+						<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
+							{t('products.gender')}
+						</th>
+						<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
+							{t('products.published')}
+						</th>
+						<th className='typography-caption px-5 py-3 font-medium text-gray-500'>
+							{t('products.sizes')}
+						</th>
 						<th className='px-5 py-3' />
 					</tr>
 				</thead>
@@ -235,15 +252,15 @@ export const ProductsTable = () => {
 									<div
 										className={`${isMale ? 'text-accent' : 'text-error'} flex-center flex gap-2`}
 									>
-										<GenderIcon />
-										{product.gender}
+										<GenderIcon className='min min-w-4' />
+										{product.gender_label}
 									</div>
 								</td>
 								<td className='typography-body-md px-5 py-3'>
 									{product.is_published ? (
-										<Badge variant='success'>Yes</Badge>
+										<Badge variant='success'> {language === 'en' ? 'Yes' : 'Да'} </Badge>
 									) : (
-										<Badge variant='error'>No</Badge>
+										<Badge variant='error'>{language === 'en' ? 'No' : 'Нет'}</Badge>
 									)}
 								</td>
 								<td className='typography-body-md px-5 py-3'>

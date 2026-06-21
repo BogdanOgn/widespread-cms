@@ -1,0 +1,127 @@
+{
+	"common": {
+		"appName": "Widespread CMS",
+		"close": "Закрыть",
+		"loading": "Загрузка..."
+	},
+	"modals": {
+		"logout": {
+			"title": "Вы уверены, что хотите выйти?",
+			"confirm": "Выйти"
+		},
+		"deleteProduct": {
+			"title": "Вы уверены, что хотите удалить товар с id {{id}}?",
+			"confirm": "Удалить"
+		},
+		"bulkDelete": {
+			"title_one": "Вы уверены, что хотите удалить {{count}} товар?",
+			"title_few": "Вы уверены, что хотите удалить {{count}} товара?",
+			"title_many": "Вы уверены, что хотите удалить {{count}} товаров?",
+			"confirm": "Удалить"
+		},
+		"createProduct": {
+			"title": "Создать товар",
+			"submit": "Создать"
+		},
+		"updateProduct": {
+			"title": "Редактировать товар",
+			"submit": "Сохранить"
+		}
+	},
+	"sidebar": {
+		"home": "Главная",
+		"products": "Товары",
+		"dashboard": "Дашборд",
+		"users": "Пользователи",
+		"logout": "Выйти"
+	},
+	"home": {
+		"title": "Домашняя панель",
+		"total": "Всего товаров",
+		"published": "Опубликовано",
+		"drafts": "В черновике",
+		"archived": "В архиве",
+		"onSale": "В продаже",
+		"minPrice": "Мин. цена",
+		"avgPrice": "Средняя цена",
+		"maxPrice": "Макс. цена",
+		"byGender": "По гендеру",
+		"topCategories": "Топ категории",
+		"topBrands": "Топ бренды",
+		"priceDistribution": "График цен",
+		"loading": "Загрузка панели…",
+		"failed": "Не удалось загрузить статистику панели мониторинга."
+	},
+	"products": {
+		"title": "Товары",
+		"addProduct": "Добавить товар",
+		"loading": "Загрузка",
+		"noFound": "Товары не найдены.",
+		"selected": "Выбрано",
+		"publish": "Опубликовать",
+		"unpublish": "Отменить публикацию",
+		"name": "Имя",
+		"images": "Изображения",
+		"description": "Описание",
+		"price": "Цена",
+		"brand": "Бренд",
+		"category": "Категория",
+		"gender": "Гендер",
+		"published": "Опубликован",
+		"sizes": "Размеры",
+		"form": {
+			"title": "Название товара",
+			"titlePlaceholder": "Введите название",
+			"slug": "Слаг товара",
+			"price": "Цена товара",
+			"pricePlaceholder": "Введите цену",
+			"gender": "Гендер товара",
+			"genderPlaceholder": "Выберите гендер",
+			"brand": "Бренд товара",
+			"brandPlaceholder": "Выберите бренд",
+			"category": "Категория товара",
+			"categoryPlaceholder": "Выберите категорию",
+			"sizes": "Размеры товара",
+			"sizesPlaceholder": "Выберите размеры",
+			"description": "Описание товара",
+			"publish": "Опубликовать товар",
+			"addPhotos": "Добавить фото"
+		},
+		"filters": {
+			"title": "Фильтры",
+			"search": "Поиск",
+			"searchPlaceholder": "Поиск по названию или описанию",
+			"reset": "Сбросить",
+			"sizePlaceholder": "Любые размеры",
+			"minPrice": "Мин. цена",
+			"maxPrice": "Макс. цена",
+			"sortBy": "Сортировать по",
+			"order": "Порядок",
+			"perPage": "Товары на странице",
+			"default": "По умолчанию",
+			"allCategories": "Все категории",
+			"allBrands": "Все бренды",
+			"allGenders": "Все гендеры",
+			"bool": {
+				"all": "Все",
+				"yes": "Да",
+				"no": "Нет"
+			},
+			"sort": {
+				"id": "ID",
+				"title": "Название",
+				"price": "Цена"
+			},
+			"orderOptions": {
+				"asc": "По возрастанию",
+				"desc": "По убыванию"
+			}
+		}
+	},
+	"enums": {
+		"gender": {
+			"male": "Мужской",
+			"female": "Женский"
+		}
+	}
+}

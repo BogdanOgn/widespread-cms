@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 import type { IProductStats } from '@/entities/product';
@@ -7,17 +9,20 @@ import { ChartCard } from '@/shared/ui';
 import { CHART_PALETTE, tooltipContentStyle } from '../lib/chart';
 
 type GenderChartProps = {
+	title: string;
 	data: IProductStats['by_gender'];
 };
 
-export const GenderChart = ({ data }: GenderChartProps) => {
+export const GenderChart = ({ title, data }: GenderChartProps) => {
+	const { t } = useTranslation();
+
 	const chartData = [
-		{ name: 'Male', value: data.male },
-		{ name: 'Female', value: data.female }
+		{ name: t('enums.gender.male'), value: data.male },
+		{ name: t('enums.gender.female'), value: data.female }
 	];
 
 	return (
-		<ChartCard title='By gender'>
+		<ChartCard title={title}>
 			<ResponsiveContainer width='100%' height='100%'>
 				<PieChart>
 					<Pie

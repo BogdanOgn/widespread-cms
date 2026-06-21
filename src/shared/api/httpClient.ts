@@ -4,9 +4,18 @@ import axios, {
 	type InternalAxiosRequestConfig
 } from 'axios';
 
+import { DEFAULT_LANGUAGE, i18n } from '@/shared/i18n';
+
 type FailedRequest = {
 	resolve: () => void;
 	reject: (error: unknown) => void;
+};
+
+const attachAcceptLanguage = (client: AxiosInstance) => {
+	client.interceptors.request.use(config => {
+		config.headers.set('Accept-Language', i18n.resolvedLanguage ?? DEFAULT_LANGUAGE);
+		return config;
+	});
 };
 
 type HttpClientOptions = {
@@ -24,6 +33,8 @@ export const createHttpClient = ({
 		baseURL,
 		withCredentials: true
 	});
+
+	attachAcceptLanguage(client);
 
 	const refreshClient = axios.create({
 		withCredentials: true,
@@ -86,6 +97,8 @@ export const publicClient = axios.create({
 	baseURL: '/api',
 	withCredentials: true
 });
+
+attachAcceptLanguage(publicClient);
 
 export const httpClient = createHttpClient({
 	onAuthFailure: () => {

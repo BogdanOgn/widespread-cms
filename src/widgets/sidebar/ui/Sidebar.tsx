@@ -1,7 +1,10 @@
 import { Link } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 import { BsBag, BsBoxArrowLeft, BsColumnsGap, BsHouse, BsPeople } from 'react-icons/bs';
 
 import clsx from 'clsx';
+
+import { LanguageSwitcher } from '@/features/language-switcher';
 
 import { ROUTES } from '@/shared/config';
 import { Button, useOpenModal } from '@/shared/ui';
@@ -9,31 +12,32 @@ import { Button, useOpenModal } from '@/shared/ui';
 const sidebarLinksList = [
 	{
 		icon: <BsHouse />,
-		title: 'Home',
+		titleKey: 'sidebar.home',
 		href: ROUTES.HOME,
 		disabled: false
 	},
 	{
 		icon: <BsBag />,
-		title: 'Products',
+		titleKey: 'sidebar.products',
 		href: ROUTES.PRODUCTS,
 		disabled: false
 	},
 	{
 		icon: <BsColumnsGap />,
-		title: 'Dashboard',
+		titleKey: 'sidebar.dashboard',
 		href: ROUTES.DASHBOARD,
 		disabled: true
 	},
 	{
 		icon: <BsPeople />,
-		title: 'Users',
+		titleKey: 'sidebar.users',
 		href: ROUTES.USERS,
 		disabled: true
 	}
-];
+] as const;
 
 export const Sidebar = () => {
+	const { t } = useTranslation();
 	const openModal = useOpenModal();
 
 	const handleOpenLogoutModal = () => {
@@ -43,7 +47,7 @@ export const Sidebar = () => {
 	return (
 		<div className='shadow-primary bg-surface sticky top-0 flex h-screen flex-col rounded-tr-2xl rounded-br-2xl p-5'>
 			<Link to={ROUTES.HOME} className='hover:text-accent-hover trs typography-h2 mb-9 text-center'>
-				Widespread CMS
+				{t('common.appName')}
 			</Link>
 			<div className='flex flex-1 flex-col gap-2'>
 				{sidebarLinksList.map(link => {
@@ -56,12 +60,13 @@ export const Sidebar = () => {
 					return (
 						<Link key={link.href} to={link.href} className={linkClass}>
 							{link.icon}
-							{link.title}
+							{t(link.titleKey)}
 						</Link>
 					);
 				})}
 			</div>
-			<div>
+			<div className='flex flex-col items-start gap-4'>
+				<LanguageSwitcher />
 				<Button
 					variant='unstyled'
 					size='unstyled'
@@ -69,7 +74,7 @@ export const Sidebar = () => {
 					className='text-error hover:text-error-hover trs typography-caption flex items-baseline'
 				>
 					<BsBoxArrowLeft />
-					Logout
+					{t('sidebar.logout')}
 				</Button>
 			</div>
 		</div>

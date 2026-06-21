@@ -1,27 +1,24 @@
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IoClose } from 'react-icons/io5';
 import { MdDragIndicator } from 'react-icons/md';
-import {
-	DndContext,
-	closestCenter,
-	PointerSensor,
-	useSensor,
-	useSensors,
-	type DragEndEvent,
-} from '@dnd-kit/core';
-import {
-	SortableContext,
-	arrayMove,
-	rectSortingStrategy,
-	useSortable,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 
 import { type PendingImage } from '@/entities/image';
 
 import { API_URL } from '@/shared/config';
 import { useUploadImage } from '@/shared/lib';
 import { Button, Spinner } from '@/shared/ui';
+
+import {
+	DndContext,
+	type DragEndEvent,
+	PointerSensor,
+	closestCenter,
+	useSensor,
+	useSensors
+} from '@dnd-kit/core';
+import { SortableContext, arrayMove, rectSortingStrategy, useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface SortableImageProps {
 	img: PendingImage;
@@ -30,14 +27,14 @@ interface SortableImageProps {
 
 const SortableImage = ({ img, onRemove }: SortableImageProps) => {
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-		id: img.localId,
+		id: img.localId
 	});
 
 	const style = {
 		transform: CSS.Transform.toString(transform),
 		transition,
 		opacity: isDragging ? 0.4 : 1,
-		zIndex: isDragging ? 10 : undefined,
+		zIndex: isDragging ? 10 : undefined
 	};
 
 	return (
@@ -73,12 +70,11 @@ interface Props {
 }
 
 export const ProductImageUpload = ({ images, onChange }: Props) => {
+	const { t } = useTranslation();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const { mutateAsync: upload, isPending } = useUploadImage();
 
-	const sensors = useSensors(
-		useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
-	);
+	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
 	const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const files = Array.from(e.target.files ?? []);
@@ -124,18 +120,11 @@ export const ProductImageUpload = ({ images, onChange }: Props) => {
 				disabled={isPending}
 				className='w-full'
 			>
-				{isPending ? <Spinner /> : 'Add photos'}
+				{isPending ? <Spinner /> : t('products.form.addPhotos')}
 			</Button>
 			{images.length > 0 && (
-				<DndContext
-					sensors={sensors}
-					collisionDetection={closestCenter}
-					onDragEnd={handleDragEnd}
-				>
-					<SortableContext
-						items={images.map(img => img.localId)}
-						strategy={rectSortingStrategy}
-					>
+				<DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+					<SortableContext items={images.map(img => img.localId)} strategy={rectSortingStrategy}>
 						<div className='grid grid-cols-3 gap-2'>
 							{images.map(img => (
 								<SortableImage key={img.localId} img={img} onRemove={handleRemove} />

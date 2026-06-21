@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { PendingImage } from '@/entities/image';
 
@@ -29,6 +30,7 @@ type UpdateProductModalPayload = {
 };
 
 export const UpdateProductModal = ({ isOpen, close }: ModalComponentProps) => {
+	const { t } = useTranslation();
 	const [pendingImages, setPendingImages] = useState<PendingImage[]>([]);
 	const {
 		productId,
@@ -123,7 +125,7 @@ export const UpdateProductModal = ({ isOpen, close }: ModalComponentProps) => {
 				className='shadow-primary w-full max-w-200 rounded-2xl p-6'
 			>
 				<Typography variant='h1' as='h3' className='mb-6 text-center'>
-					Update product
+					{t('modals.updateProduct.title')}
 				</Typography>
 				<div className='flex-center h-50'>
 					<Spinner />
@@ -151,10 +153,10 @@ export const UpdateProductModal = ({ isOpen, close }: ModalComponentProps) => {
 				/>
 				<div className='flex gap-4'>
 					<Button variant='success' type='submit' className='w-full' disabled={isPending}>
-						{isPending ? <Spinner /> : 'Update'}
+						{isPending ? <Spinner /> : t('modals.updateProduct.submit')}
 					</Button>
 					<Button onClick={close} className='w-full'>
-						Close
+						{t('common.close')}
 					</Button>
 				</div>
 			</form>

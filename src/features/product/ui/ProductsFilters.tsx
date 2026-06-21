@@ -1,5 +1,6 @@
 import { useNavigate, useSearch } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useBrands } from '@/features/brand';
 import { useCategories } from '@/features/category';
@@ -11,16 +12,46 @@ import { PAGE_SIZES } from '@/shared/config';
 import { convertOptions, toBoolean, useDebouncedValue } from '@/shared/lib';
 import { Button, Input, type Option, Selector, Typography } from '@/shared/ui';
 
-import {
-	FILTER_BOOL_OPTIONS,
-	FILTER_GENDER_OPTIONS,
-	FILTER_ORDER_OPTIONS,
-	FILTER_SORT_OPTIONS
-} from '../config';
-
 const ALL_ID = 0;
 
 export const ProductsFilters = () => {
+	const { t } = useTranslation();
+
+	const genderOptions: Option<string>[] = useMemo(
+		() => [
+			{ label: t('products.filters.allGenders'), value: '' },
+			{ label: t('enums.gender.male'), value: 'male' },
+			{ label: t('enums.gender.female'), value: 'female' }
+		],
+		[t]
+	);
+
+	const boolOptions: Option<string>[] = useMemo(
+		() => [
+			{ label: t('products.filters.bool.all'), value: '' },
+			{ label: t('products.filters.bool.yes'), value: 'true' },
+			{ label: t('products.filters.bool.no'), value: 'false' }
+		],
+		[t]
+	);
+
+	const sortOptions: Option<string>[] = useMemo(
+		() => [
+			{ label: t('products.filters.sort.id'), value: 'id' },
+			{ label: t('products.filters.sort.title'), value: 'title' },
+			{ label: t('products.filters.sort.price'), value: 'price' }
+		],
+		[t]
+	);
+
+	const orderOptions: Option<string>[] = useMemo(
+		() => [
+			{ label: t('products.filters.orderOptions.asc'), value: 'asc' },
+			{ label: t('products.filters.orderOptions.desc'), value: 'desc' }
+		],
+		[t]
+	);
+
 	const search = useSearch({ strict: false }) as IProductsSearch;
 	const navigate = useNavigate();
 
@@ -61,11 +92,11 @@ export const ProductsFilters = () => {
 	};
 
 	const categoryOptions: Option<number>[] = [
-		{ label: 'All categories', value: ALL_ID },
+		{ label: t('products.filters.allCategories'), value: ALL_ID },
 		...convertOptions(categories)
 	];
 	const brandOptions: Option<number>[] = [
-		{ label: 'All brands', value: ALL_ID },
+		{ label: t('products.filters.allBrands'), value: ALL_ID },
 		...convertOptions(brands)
 	];
 	const sizeOptions = convertOptions(sizes);
@@ -73,12 +104,10 @@ export const ProductsFilters = () => {
 	const pageCountValue = PAGE_SIZES.find(o => o.value === search.page_size);
 	const categoryValue = categoryOptions.find(o => o.value === (search.category_id ?? ALL_ID));
 	const brandValue = brandOptions.find(o => o.value === (search.brand_id ?? ALL_ID));
-	const genderValue = FILTER_GENDER_OPTIONS.find(o => o.value === (search.gender ?? ''));
-	const publishedValue = FILTER_BOOL_OPTIONS.find(
-		o => o.value === String(search.is_published ?? '')
-	);
-	const sortValue = FILTER_SORT_OPTIONS.find(o => o.value === search.sort_by);
-	const orderValue = FILTER_ORDER_OPTIONS.find(o => o.value === search.order);
+	const genderValue = genderOptions.find(o => o.value === (search.gender ?? ''));
+	const publishedValue = boolOptions.find(o => o.value === String(search.is_published ?? ''));
+	const sortValue = sortOptions.find(o => o.value === search.sort_by);
+	const orderValue = orderOptions.find(o => o.value === search.order);
 	const sizeValue = sizeOptions.filter(o => search.size_ids?.includes(o.value));
 
 	const hasActiveFilters = [
@@ -99,11 +128,11 @@ export const ProductsFilters = () => {
 		<div className='flex flex-col gap-5'>
 			<div className='flex items-center justify-between'>
 				<Typography variant='h3' as='h3'>
-					Filters
+					{t('products.filters.title')}
 				</Typography>
 				{hasActiveFilters && (
 					<Button size='sm' variant='secondary' onClick={handleReset}>
-						Reset
+						{t('products.filters.reset')}
 					</Button>
 				)}
 			</div>
@@ -112,8 +141,8 @@ export const ProductsFilters = () => {
 				<div className='col-span-2 lg:col-span-4'>
 					<Input
 						name='search'
-						hint='Search'
-						placeholder='Search by title or description'
+						hint={t('products.filters.search')}
+						placeholder={t('products.filters.searchPlaceholder')}
 						value={text.search}
 						onChange={value => setText(prev => ({ ...prev, search: value }))}
 					/>
@@ -121,7 +150,7 @@ export const ProductsFilters = () => {
 
 				<Selector
 					name='category_id'
-					hint='Category'
+					hint={t('products.category')}
 					options={categoryOptions}
 					value={categoryValue}
 					onChange={option => {
@@ -132,7 +161,7 @@ export const ProductsFilters = () => {
 
 				<Selector
 					name='brand_id'
-					hint='Brand'
+					hint={t('products.brand')}
 					options={brandOptions}
 					value={brandValue}
 					onChange={option => {
@@ -143,8 +172,8 @@ export const ProductsFilters = () => {
 
 				<Selector
 					name='gender'
-					hint='Gender'
-					options={FILTER_GENDER_OPTIONS}
+					hint={t('products.gender')}
+					options={genderOptions}
 					value={genderValue}
 					onChange={option => {
 						const value = (option as Option<string> | null)?.value;
@@ -154,9 +183,9 @@ export const ProductsFilters = () => {
 
 				<Selector
 					name='size_ids'
-					hint='Sizes'
+					hint={t('products.sizes')}
 					isMulti
-					placeholder='Any size'
+					placeholder={t('products.filters.sizePlaceholder')}
 					options={sizeOptions}
 					value={sizeValue}
 					onChange={option => {
@@ -167,8 +196,8 @@ export const ProductsFilters = () => {
 
 				<Selector
 					name='is_published'
-					hint='Published'
-					options={FILTER_BOOL_OPTIONS}
+					hint={t('products.published')}
+					options={boolOptions}
 					value={publishedValue}
 					onChange={option =>
 						update({ is_published: toBoolean((option as Option<string>)?.value) })
@@ -177,7 +206,7 @@ export const ProductsFilters = () => {
 
 				<Input
 					name='min_price'
-					hint='Min price'
+					hint={t('products.filters.minPrice')}
 					placeholder='0'
 					mask={Number}
 					value={text.min_price}
@@ -186,7 +215,7 @@ export const ProductsFilters = () => {
 
 				<Input
 					name='max_price'
-					hint='Max price'
+					hint={t('products.filters.maxPrice')}
 					mask={Number}
 					placeholder='∞'
 					value={text.max_price}
@@ -195,9 +224,9 @@ export const ProductsFilters = () => {
 
 				<Selector
 					name='sort_by'
-					hint='Sort by'
-					placeholder='Default'
-					options={FILTER_SORT_OPTIONS}
+					hint={t('products.filters.sortBy')}
+					placeholder={t('products.filters.default')}
+					options={sortOptions}
 					value={sortValue}
 					onChange={option => {
 						const value = (option as Option<string> | null)?.value;
@@ -209,9 +238,9 @@ export const ProductsFilters = () => {
 
 				<Selector
 					name='order'
-					hint='Order'
-					placeholder='Default'
-					options={FILTER_ORDER_OPTIONS}
+					hint={t('products.filters.order')}
+					placeholder={t('products.filters.default')}
+					options={orderOptions}
 					value={orderValue}
 					onChange={option => {
 						const value = (option as Option<string> | null)?.value;
@@ -221,7 +250,7 @@ export const ProductsFilters = () => {
 
 				<Selector
 					name='page_size'
-					hint='Items per page'
+					hint={t('products.filters.perPage')}
 					options={PAGE_SIZES}
 					value={pageCountValue}
 					onChange={option => {

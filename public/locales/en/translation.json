@@ -1,0 +1,126 @@
+{
+	"common": {
+		"appName": "Widespread CMS",
+		"close": "Close",
+		"loading": "Loading..."
+	},
+	"modals": {
+		"logout": {
+			"title": "Are you sure you want to logout?",
+			"confirm": "Logout"
+		},
+		"deleteProduct": {
+			"title": "Are you sure you want to delete product with {{id}} id?",
+			"confirm": "Delete"
+		},
+		"bulkDelete": {
+			"title_one": "Are you sure you want to delete {{count}} product?",
+			"title_other": "Are you sure you want to delete {{count}} products?",
+			"confirm": "Delete"
+		},
+		"createProduct": {
+			"title": "Create product",
+			"submit": "Create"
+		},
+		"updateProduct": {
+			"title": "Update product",
+			"submit": "Update"
+		}
+	},
+	"sidebar": {
+		"home": "Home",
+		"products": "Products",
+		"dashboard": "Dashboard",
+		"users": "Users",
+		"logout": "Logout"
+	},
+	"home": {
+		"title": "Home Dashboard",
+		"total": "Total products",
+		"published": "Published",
+		"drafts": "Drafts",
+		"archived": "Archived",
+		"onSale": "On sale",
+		"minPrice": "Min price",
+		"avgPrice": "Avg price",
+		"maxPrice": "Max price",
+		"byGender": "By gender",
+		"topCategories": "Top categories",
+		"topBrands": "Top brands",
+		"priceDistribution": "Price distribution",
+		"loading": "Loading dashboard…",
+		"failed": "Failed to load dashboard stats."
+	},
+	"products": {
+		"title": "Products",
+		"addProduct": "Add Product",
+		"loading": "Loading",
+		"noFound": "No products found.",
+		"selected": "Selected",
+		"publish": "Publish",
+		"unpublish": "Unpublish",
+		"name": "Name",
+		"images": "Images",
+		"description": "Description",
+		"price": "Price",
+		"brand": "Brand",
+		"category": "Category",
+		"gender": "Gender",
+		"published": "Published",
+		"sizes": "Sizes",
+		"form": {
+			"title": "Product title",
+			"titlePlaceholder": "Enter title",
+			"slug": "Product slug",
+			"price": "Product price",
+			"pricePlaceholder": "Enter price",
+			"gender": "Product gender",
+			"genderPlaceholder": "Select gender",
+			"brand": "Product brand",
+			"brandPlaceholder": "Select brand",
+			"category": "Product category",
+			"categoryPlaceholder": "Select category",
+			"sizes": "Product sizes",
+			"sizesPlaceholder": "Select sizes",
+			"description": "Product description",
+			"publish": "Publish product",
+			"addPhotos": "Add photos"
+		},
+		"filters": {
+			"title": "Filters",
+			"search": "Search",
+			"searchPlaceholder": "Search by title or description",
+			"reset": "Reset",
+			"sizePlaceholder": "Any size",
+			"minPrice": "Min price",
+			"maxPrice": "Max price",
+			"sortBy": "Sort by",
+			"order": "Order",
+			"perPage": "Items per page",
+			"default": "Default",
+			"allCategories": "All categories",
+			"allBrands": "All brands",
+			"allGenders": "All genders",
+			"bool": {
+				"all": "All",
+				"yes": "Yes",
+				"no": "No"
+			},
+			"sort": {
+				"id": "ID",
+				"title": "Title",
+				"price": "Price"
+			},
+			"orderOptions": {
+				"asc": "Ascending",
+				"desc": "Descending"
+			}
+		}
+	},
+	"enums": {
+		"gender": {
+			"male": "Male",
+			"female": "Female"
+		}
+	}
+}

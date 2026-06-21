@@ -30,7 +30,8 @@ export default defineConfig({
 			'@/widgets': path.resolve(__dirname, 'src/widgets'),
 			'@/features': path.resolve(__dirname, 'src/features'),
 			'@/entities': path.resolve(__dirname, 'src/entities'),
-			'@/shared': path.resolve(__dirname, 'src/shared')
+			'@/shared': path.resolve(__dirname, 'src/shared'),
+			'@public': path.resolve(__dirname, 'public')
 		}
 	}
 });

@@ -14,6 +14,7 @@ export const makeProduct = (overrides: Partial<IProduct> = {}): IProduct => ({
 	sale_price: undefined,
 	slug: 'running-shoes',
 	gender: 'male',
+	gender_label: 'Male',
 	is_published: true,
 	is_archived: false,
 	category: attr(20, 'Footwear'),

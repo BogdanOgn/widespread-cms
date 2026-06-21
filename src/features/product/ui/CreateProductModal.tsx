@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { PendingImage } from '@/entities/image';
 
@@ -28,6 +29,7 @@ type CreateProductModalPayload = {
 };
 
 export const CreateProductModal = ({ isOpen, close }: ModalComponentProps) => {
+	const { t } = useTranslation();
 	const { brands = [], sizes = [], categories = [] } = useModalPayload<CreateProductModalPayload>();
 
 	const convertedBrands = useMemo(() => convertOptions(brands), [brands]);
@@ -84,7 +86,7 @@ export const CreateProductModal = ({ isOpen, close }: ModalComponentProps) => {
 			className='shadow-primary w-full max-w-200 rounded-2xl p-6'
 		>
 			<Typography variant='h1' as='h3' className='mb-6 text-center'>
-				Create product
+				{t('modals.createProduct.title')}
 			</Typography>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<ProductFormFields
@@ -97,10 +99,10 @@ export const CreateProductModal = ({ isOpen, close }: ModalComponentProps) => {
 				/>
 				<div className='flex gap-4'>
 					<Button variant='success' type='submit' className='w-full' disabled={isPending}>
-						{isPending ? <Spinner /> : 'Create'}
+						{isPending ? <Spinner /> : t('modals.createProduct.submit')}
 					</Button>
 					<Button onClick={handleCloseModal} className='w-full' disabled={isPending}>
-						Close
+						{t('common.close')}
 					</Button>
 				</div>
 			</form>

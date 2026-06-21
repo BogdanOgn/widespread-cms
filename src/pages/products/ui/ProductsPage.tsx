@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { ResourceLayout } from '@/widgets/resource-layout';
 
 import { useBrands } from '@/features/brand';
@@ -10,6 +12,8 @@ import { Button, useOpenModal } from '@/shared/ui';
 import { ProductsTable } from './ProductsTable';
 
 export const ProductsPage = () => {
+	const { t } = useTranslation();
+
 	const openModal = useOpenModal();
 	const { data: brands = [] } = useBrands();
 	const { data: categories = [] } = useCategories();
@@ -22,10 +26,10 @@ export const ProductsPage = () => {
 	return (
 		<main className='p-5'>
 			<ResourceLayout
-				title='Products'
+				title={t('products.title')}
 				actions={
 					<Button size='sm' onClick={handleOpenCreateProductModal}>
-						Add product
+						{t('products.addProduct')}
 					</Button>
 				}
 				filters={<ProductsFilters />}
