@@ -71,6 +71,7 @@ export const ProductsTable = () => {
 		} else {
 			setSelectedIds(prev => {
 				const next = new Set(prev);
+				console.log(next);
 				pageItems.forEach(p => next.add(p.id));
 				return next;
 			});
@@ -80,6 +81,7 @@ export const ProductsTable = () => {
 	const toggleSelect = (id: number) => {
 		setSelectedIds(prev => {
 			const next = new Set(prev);
+
 			if (next.has(id)) {
 				next.delete(id);
 			} else {
@@ -139,7 +141,7 @@ export const ProductsTable = () => {
 	}
 
 	return (
-		<div className='bg-surface shadow-primary relative flex flex-1 flex-col overflow-hidden rounded-2xl'>
+		<div className='bg-surface shadow-primary relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl'>
 			{isFetching && (
 				<div className='flex-center absolute inset-0 z-10 m-auto flex backdrop-blur-sm'>
 					<Spinner />
@@ -175,126 +177,129 @@ export const ProductsTable = () => {
 				</div>
 			)}
 
-			<table className='w-full table-fixed text-left'>
-				<thead>
-					<tr className='border-b border-gray-100'>
-						<th className='w-12 px-5 py-3'>
-							<Checkbox checked={allPageSelected} onChange={toggleSelectAll} />
-						</th>
-						<th className='typography-caption w-16 px-5 py-3 font-medium text-gray-500'>ID</th>
-						<th className='typography-caption w-50 px-5 py-3 font-medium text-gray-500'>
-							{t('products.name')}
-						</th>
-						<th className='typography-caption w-22 px-5 py-3 font-medium text-gray-500'>
-							{t('products.images')}
-						</th>
-						<th className='typography-caption w-80 px-5 py-3 font-medium text-gray-500'>
-							{t('products.description')}
-						</th>
-						<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
-							{t('products.price')}
-						</th>
-						<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
-							{t('products.brand')}
-						</th>
-						<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
-							{t('products.category')}
-						</th>
-						<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
-							{t('products.gender')}
-						</th>
-						<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
-							{t('products.published')}
-						</th>
-						<th className='typography-caption px-5 py-3 font-medium text-gray-500'>
-							{t('products.sizes')}
-						</th>
-						<th className='px-5 py-3' />
-					</tr>
-				</thead>
-				<tbody>
-					{products.items.map(product => {
-						const isMale = product.gender === 'male';
-						const GenderIcon = isMale ? BsGenderMale : BsGenderFemale;
-						const mainImage = product.images?.find(image => image.order === 0);
-						const isSelected = selectedIds.has(product.id);
+			<div className='min-h-0 flex-1 overflow-auto'>
+				<table className='w-full table-fixed border-separate border-spacing-0 text-left'>
+					<thead className='sticky top-0 z-10'>
+						<tr className='[&>th]:bg-surface [&>th]:border-b [&>th]:border-gray-100'>
+							<th className='w-16 px-5 py-3'>
+								<Checkbox checked={allPageSelected} onChange={toggleSelectAll} />
+							</th>
+							<th className='typography-caption w-16 px-5 py-3 font-medium text-gray-500'>ID</th>
+							<th className='typography-caption w-50 px-5 py-3 font-medium text-gray-500'>
+								{t('products.name')}
+							</th>
+							<th className='typography-caption w-22 px-5 py-3 font-medium text-gray-500'>
+								{t('products.images')}
+							</th>
+							<th className='typography-caption w-80 px-5 py-3 font-medium text-gray-500'>
+								{t('products.description')}
+							</th>
+							<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
+								{t('products.price')}
+							</th>
+							<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
+								{t('products.brand')}
+							</th>
+							<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
+								{t('products.category')}
+							</th>
+							<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
+								{t('products.gender')}
+							</th>
+							<th className='typography-caption w-30 px-5 py-3 font-medium text-gray-500'>
+								{t('products.published')}
+							</th>
+							<th className='typography-caption w-37.5 px-5 py-3 font-medium text-gray-500'>
+								{t('products.sizes')}
+							</th>
+							<th className='w-37.5 px-5 py-3' />
+						</tr>
+					</thead>
+					<tbody>
+						{products.items.map(product => {
+							const isMale = product.gender === 'male';
+							const GenderIcon = isMale ? BsGenderMale : BsGenderFemale;
+							const mainImage = product.images?.find(image => image.order === 0);
+							const isSelected = selectedIds.has(product.id);
 
-						return (
-							<tr
-								key={product.id}
-								className={`border-b border-gray-100 last:border-0 ${isSelected ? 'bg-accent/5' : ''}`}
-							>
-								<td className='px-5 py-3'>
-									<Checkbox checked={isSelected} onChange={() => toggleSelect(product.id)} />
-								</td>
-								<td className='typography-body-md px-5 py-3'>{product.id}</td>
-								<td className='typography-body-md px-5 py-3'>{product.title}</td>
-								<td className='typography-body-md px-5 py-3'>
-									{product.images && (
-										<div className='bg-gray h-12 w-12 overflow-hidden rounded-sm'>
-											<img
-												src={mainImage ? `${API_URL}${mainImage.url}` : 'nophoto.png'}
-												alt='product image'
-												className='h-full w-full object-cover'
-											/>
+							return (
+								<tr
+									key={product.id}
+									className={`[&>td]:border-b [&>td]:border-gray-100 last:[&>td]:border-0 ${isSelected ? 'bg-accent/5' : ''}`}
+								>
+									<td className='px-5 py-3'>
+										<Checkbox checked={isSelected} onChange={() => toggleSelect(product.id)} />
+									</td>
+									<td className='typography-body-md px-5 py-3'>{product.id}</td>
+									<td className='typography-body-md px-5 py-3'>{product.title}</td>
+									<td className='typography-body-md px-5 py-3'>
+										{product.images && (
+											<div className='bg-gray h-12 w-12 overflow-hidden rounded-sm'>
+												<img
+													src={mainImage ? `${API_URL}${mainImage.url}` : 'nophoto.png'}
+													alt='product image'
+													className='h-full w-full object-cover'
+												/>
+											</div>
+										)}
+									</td>
+									<td className='typography-body-md px-5 py-3 text-gray-500'>
+										<div className='line-clamp-1'>{stripHtml(product.description)}</div>
+									</td>
+									<td className='typography-body-md px-5 py-3'>
+										${Number(product.price).toFixed(2)}
+									</td>
+									<td className='typography-body-md px-5 py-3'>{product.brand?.name ?? '-'}</td>
+									<td className='typography-body-md px-5 py-3'>{product.category?.name ?? '-'}</td>
+									<td className='typography-body-md px-5 py-3'>
+										<div
+											className={`${isMale ? 'text-accent' : 'text-error'} flex-center flex gap-2`}
+										>
+											<GenderIcon className='min min-w-4' />
+											{product.gender_label}
 										</div>
-									)}
-								</td>
-								<td className='typography-body-md px-5 py-3 text-gray-500'>
-									<div className='line-clamp-1'>{stripHtml(product.description)}</div>
-								</td>
-								<td className='typography-body-md px-5 py-3'>
-									${Number(product.price).toFixed(2)}
-								</td>
-								<td className='typography-body-md px-5 py-3'>{product.brand?.name ?? '-'}</td>
-								<td className='typography-body-md px-5 py-3'>{product.category?.name ?? '-'}</td>
-								<td className='typography-body-md px-5 py-3'>
-									<div
-										className={`${isMale ? 'text-accent' : 'text-error'} flex-center flex gap-2`}
-									>
-										<GenderIcon className='min min-w-4' />
-										{product.gender_label}
-									</div>
-								</td>
-								<td className='typography-body-md px-5 py-3'>
-									{product.is_published ? (
-										<Badge variant='success'> {language === 'en' ? 'Yes' : 'Да'} </Badge>
-									) : (
-										<Badge variant='error'>{language === 'en' ? 'No' : 'Нет'}</Badge>
-									)}
-								</td>
-								<td className='typography-body-md px-5 py-3'>
-									<div className='flex flex-wrap gap-2'>
-										{product.sizes.map(size => (
-											<Badge key={size.id}>{size.name}</Badge>
-										))}
-									</div>
-								</td>
-								<td className='px-5 py-3'>
-									<div className='flex items-center justify-end gap-2'>
-										<Button
-											className='hover:text-accent-hover text-yellow-300'
-											variant='ghost'
-											size='md'
-											onClick={() => handleOpenUpdateProductModal(product.id)}
-										>
-											<BsPencil />
-										</Button>
-										<Button
-											variant='ghost'
-											size='md'
-											className='text-error hover:text-error-hover'
-											onClick={() => handleOpenDeleteProductModal(product.id)}
-										>
-											<BsTrash />
-										</Button>
-									</div>
-								</td>
-							</tr>
-						);
-					})}
-				</tbody>
-			</table>
+									</td>
+									<td className='typography-body-md px-5 py-3'>
+										{product.is_published ? (
+											<Badge variant='success'> {language === 'en' ? 'Yes' : 'Да'} </Badge>
+										) : (
+											<Badge variant='error'>{language === 'en' ? 'No' : 'Нет'}</Badge>
+										)}
+									</td>
+									<td className='typography-body-md px-5 py-3'>
+										<div className='flex flex-wrap gap-2'>
+											{product.sizes.map(size => (
+												<Badge key={size.id}>{size.name}</Badge>
+											))}
+										</div>
+									</td>
+									<td className='px-5 py-3'>
+										<div className='flex items-center justify-end gap-2'>
+											<Button
+												className='hover:text-accent-hover text-yellow-300'
+												variant='ghost'
+												size='md'
+												onClick={() => handleOpenUpdateProductModal(product.id)}
+											>
+												<BsPencil />
+											</Button>
+											<Button
+												variant='ghost'
+												size='md'
+												className='text-error hover:text-error-hover'
+												onClick={() => handleOpenDeleteProductModal(product.id)}
+											>
+												<BsTrash />
+											</Button>
+										</div>
+									</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</table>
+			</div>
+
 			<Pagination
 				page={products.page}
 				pages={products.pages}

@@ -11,3 +11,4 @@ export { Pagination } from './pagination';
 export { RichTextEditor, RHFRichTextEditor } from './rich-text-editor';
 export { StatCard } from './stat-card';
 export { ChartCard } from './chart-card';
+export { FilterDropdown } from './filter-dropdown';

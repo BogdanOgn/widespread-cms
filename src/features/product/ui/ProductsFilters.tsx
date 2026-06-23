@@ -10,7 +10,7 @@ import type { IProductsSearch } from '@/entities/product';
 
 import { PAGE_SIZES } from '@/shared/config';
 import { convertOptions, toBoolean, useDebouncedValue } from '@/shared/lib';
-import { Button, Input, type Option, Selector, Typography } from '@/shared/ui';
+import { Button, FilterDropdown, Input, type Option, Selector } from '@/shared/ui';
 
 const ALL_ID = 0;
 
@@ -125,18 +125,16 @@ export const ProductsFilters = () => {
 	].some(value => value !== undefined && value !== '');
 
 	return (
-		<div className='flex flex-col gap-5'>
-			<div className='flex items-center justify-between'>
-				<Typography variant='h3' as='h3'>
-					{t('products.filters.title')}
-				</Typography>
-				{hasActiveFilters && (
+		<FilterDropdown
+			title={t('products.filters.title')}
+			actions={
+				hasActiveFilters && (
 					<Button size='sm' variant='secondary' onClick={handleReset}>
 						{t('products.filters.reset')}
 					</Button>
-				)}
-			</div>
-
+				)
+			}
+		>
 			<div className='grid grid-cols-2 gap-4 lg:grid-cols-4'>
 				<div className='col-span-2 lg:col-span-4'>
 					<Input
@@ -156,6 +154,17 @@ export const ProductsFilters = () => {
 					onChange={option => {
 						const value = (option as Option<number> | null)?.value;
 						update({ category_id: value ? value : undefined });
+					}}
+				/>
+				<Selector
+					name='order'
+					hint={t('products.filters.order')}
+					placeholder={t('products.filters.default')}
+					options={orderOptions}
+					value={orderValue}
+					onChange={option => {
+						const value = (option as Option<string> | null)?.value;
+						update({ order: value === 'asc' || value === 'desc' ? value : undefined });
 					}}
 				/>
 
@@ -237,18 +246,6 @@ export const ProductsFilters = () => {
 				/>
 
 				<Selector
-					name='order'
-					hint={t('products.filters.order')}
-					placeholder={t('products.filters.default')}
-					options={orderOptions}
-					value={orderValue}
-					onChange={option => {
-						const value = (option as Option<string> | null)?.value;
-						update({ order: value === 'asc' || value === 'desc' ? value : undefined });
-					}}
-				/>
-
-				<Selector
 					name='page_size'
 					hint={t('products.filters.perPage')}
 					options={PAGE_SIZES}
@@ -259,6 +256,6 @@ export const ProductsFilters = () => {
 					}}
 				/>
 			</div>
-		</div>
+		</FilterDropdown>
 	);
 };

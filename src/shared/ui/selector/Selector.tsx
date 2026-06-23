@@ -60,6 +60,7 @@ export const Selector = <T extends string | number = string>({
 				defaultValue={defaultValue}
 				options={options}
 				classNamePrefix='select'
+				menuPlacement='auto'
 				classNames={{
 					control: () =>
 						`h-12 rounded-md border px-4 bg-background cursor-pointer shadow-primary ${error ? 'border-error' : 'border-none'}`,

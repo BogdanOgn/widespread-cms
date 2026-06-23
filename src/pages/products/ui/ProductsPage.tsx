@@ -24,7 +24,7 @@ export const ProductsPage = () => {
 	};
 
 	return (
-		<main className='p-5'>
+		<main className='h-full max-h-screen min-h-0 overflow-hidden p-5'>
 			<ResourceLayout
 				title={t('products.title')}
 				actions={
